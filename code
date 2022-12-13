@@ -1,0 +1,157 @@
+import random
+
+
+def linear_search(arr, x):
+  answer = None
+  for i in range(len(arr)):
+    if arr[i] == x:
+      answer = i
+  return answer
+
+
+def better_linear_search(arr, x):
+  answer = None
+  for i in range(len(arr)):
+    if arr[i] == x:
+      answer = i
+      return answer
+
+
+def sentinel_linear_search(arr, x):
+  last = arr[-1]
+  arr[-1] = x
+  counter = 0
+  while arr[counter] != x:
+    counter += 1
+  arr[-1] = last
+  if counter < len(arr) - 1 or arr[-1] == x:
+    return counter
+  else:
+    return None
+
+
+def recursive_linear_search(arr, x, counter=0):
+  if counter > len(arr) - 1:
+    return None
+  if arr[counter] == x:
+    return counter
+  else:
+    counter = recursive_linear_search(arr, x, counter + 1)
+    return counter
+
+
+def binary_search(arr, x):
+  begin, end = 0, len(arr) - 1
+  while begin <= end:
+    center = (begin + end) // 2
+    if arr[center] == x:
+      return center
+    elif arr[center] > x:
+      end = center - 1
+    else:
+      begin = center + 1
+  else:
+    return None
+
+
+def recursive_binary_search(arr, begin, end, x):
+  if begin > end:
+    return None
+  else:
+    center = (begin + end) // 2
+    if arr[center] == x:
+      return center
+    elif arr[center] > x:
+      center = recursive_binary_search(arr, begin, center - 1, x)
+      return center
+    else:
+      center = recursive_binary_search(arr, center + 1, end, x)
+      return center
+
+
+def selection_sort(arr):
+  for i in range(len(arr) - 1):
+    smallest = i
+    for j in range(i + 1, len(arr)):
+      if arr[j] < arr[smallest]:
+        smallest = j
+    arr[smallest], arr[i] = arr[i], arr[smallest]
+  return arr
+
+
+def insertion_sort(arr):
+  for i in range(1, len(arr)):
+    key = arr[i]
+    j = i - 1
+    while j >= 0 and arr[j] > key:
+      arr[j + 1] = arr[j]
+      j -= 1
+    arr[j + 1] = key
+  return arr
+
+
+def merge_sort(arr):
+  if len(arr) > 1:
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+    merge_sort(left)
+    merge_sort(right)
+
+    i = j = k = 0
+
+    while i < len(left) and j < len(right):
+      if left[i] < right[j]:
+        arr[k] = left[i]
+        i += 1
+      else:
+        arr[k] = right[j]
+        j += 1
+      k += 1
+
+    while i < len(left):
+      arr[k] = left[i]
+      i += 1
+      k += 1
+
+    while j < len(right):
+      arr[k] = right[j]
+      j += 1
+      k += 1
+
+  return arr
+
+
+def quicksort(arr, begin, end):
+  if begin >= end:
+    return
+  else:
+    q = partition(arr, begin, end)
+    quicksort(arr, begin, q - 1)
+    quicksort(arr, q + 1, end)
+
+
+def partition(arr, begin, end):
+  q = begin
+  for u in range(begin, end - 1):
+    if arr[u] <= arr[end]:
+      arr[q], arr[u] = arr[u], arr[q]
+      q += 1
+      arr[q], arr[end] = arr[end], arr[q]
+  return q
+
+
+num = 6
+random.seed(123)
+some_list = [random.randint(0, 9) for _ in range(num)]
+print(some_list)
+
+# some_list = list(range(10))
+# some_list = [1, 3, 4, 7, 8, 11, 12, 13, 15, 20]
+# print(binary_search(some_list, 15))
+# print(recursive_binary_search(some_list, 0, len(some_list) - 1, 15))
+# print(selection_sort(some_list))
+# print(insertion_sort(some_list))
+# print(merge_sort(some_list))
+quicksort(some_list, 0, len(some_list) - 1)
+print(some_list)
