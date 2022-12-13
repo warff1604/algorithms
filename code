@@ -133,11 +133,12 @@ def quicksort(arr, begin, end):
 
 def partition(arr, begin, end):
   q = begin
-  for u in range(begin, end - 1):
-    if arr[u] <= arr[end]:
-      arr[q], arr[u] = arr[u], arr[q]
+  for u in range(begin + 1, end + 1):
+    if arr[u] <= arr[begin]:
       q += 1
-      arr[q], arr[end] = arr[end], arr[q]
+      arr[u], arr[q] = arr[q], arr[u]
+      
+  arr[q], arr[begin] = arr[begin], arr[q]
   return q
 
 
