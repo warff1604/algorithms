@@ -1,5 +1,12 @@
 import random
 
+# Алгоритмы поиска:
+
+# - линейный поиск
+# Время работы в наихудшем случае - O(n)
+# Время работы в наилучшем случае - O(1)
+# Требует ли отсортированного входного массива - Нет
+
 
 def linear_search(arr, x):
   answer = None
@@ -40,6 +47,10 @@ def recursive_linear_search(arr, x, counter=0):
     return counter
 
 
+# - бинарный поиск
+# Время работы в наихудшем случае - O(lg n)
+# Время работы в наилучшем случае - O(1)
+# Требует ли отсортированного входного массива - Да
 def binary_search(arr, x):
   begin, end = 0, len(arr) - 1
   while begin <= end:
@@ -69,6 +80,14 @@ def recursive_binary_search(arr, begin, end, x):
       return center
 
 
+# Алгоритмы сортировки:
+
+
+# - сортировка выбором
+# Время работы в наихудшем случае - O(n2)
+# Время работы в наилучшем случае - O(n2)
+# Обменов в наихудшем случае - O(n)
+# Выполняется ли сортировка на месте - Да
 def selection_sort(arr):
   for i in range(len(arr) - 1):
     smallest = i
@@ -79,6 +98,11 @@ def selection_sort(arr):
   return arr
 
 
+# - сортировка вставкой
+# Время работы в наихудшем случае - O(n2)
+# Время работы в наилучшем случае - O(n)
+# Обменов в наихудшем случае - O(n2)
+# Выполняется ли сортировка на месте - Да
 def insertion_sort(arr):
   for i in range(1, len(arr)):
     key = arr[i]
@@ -90,6 +114,11 @@ def insertion_sort(arr):
   return arr
 
 
+# - сортировка слиянием
+# Время работы в наихудшем случае - O(nlg n)
+# Время работы в наилучшем случае - O(nlg n)
+# Обменов в наихудшем случае - O(nlg n)
+# Выполняется ли сортировка на месте - Нет
 def merge_sort(arr):
   if len(arr) > 1:
     mid = len(arr) // 2
@@ -122,6 +151,11 @@ def merge_sort(arr):
   return arr
 
 
+# - сортировка быстрая
+# Время работы в наихудшем случае - O(n2)
+# Время работы в наилучшем случае - O(nlg n)
+# Обменов в наихудшем случае - O(n2)
+# Выполняется ли сортировка на месте - Да
 def quicksort(arr, begin, end):
   if begin >= end:
     return
@@ -137,13 +171,23 @@ def partition(arr, begin, end):
     if arr[u] <= arr[begin]:
       q += 1
       arr[u], arr[q] = arr[q], arr[u]
-      
+
   arr[q], arr[begin] = arr[begin], arr[q]
   return q
 
 
-num = 6
-random.seed(123)
+def really_simple_sort(arr):
+  counter = 0
+  for i in range(len(arr)):
+    if arr[i] == 1:
+      counter += 1
+  arr[:counter] = [1] * counter
+  arr[counter:] = [2] * (len(arr) - counter)
+  return arr
+
+
+num = 10
+random.seed(12345)
 some_list = [random.randint(0, 9) for _ in range(num)]
 print(some_list)
 
@@ -154,5 +198,6 @@ print(some_list)
 # print(selection_sort(some_list))
 # print(insertion_sort(some_list))
 # print(merge_sort(some_list))
-quicksort(some_list, 0, len(some_list) - 1)
-print(some_list)
+# quicksort(some_list, 0, len(some_list) - 1)
+# print(some_list)
+print(really_simple_sort([2, 2, 1, 2, 1, 2, 1]))
